@@ -1,0 +1,87 @@
+import { useContext, useEffect, useState } from "react";
+import { Button, Form, FormGroup } from "react-bootstrap";
+import { UserContext } from "../contexts/UsersContext";
+import { FiUser } from "react-icons/fi";
+import { Link } from "react-router-dom";
+
+const LoginScreen = ({ history, location }) => {
+  const { loginUser, userInfo } = useContext(UserContext);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect);
+    }
+  }, [history, userInfo, redirect]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const loginuser = {
+      email,
+      password,
+    };
+
+    loginUser(loginuser);
+  }
+  
+
+  return (
+    <div
+      style={{
+        height: "80vh",
+        width: "100%",
+        display: "grid",
+        gridTemplateColumns: "50%",
+        justifyContent: "center",
+        alignItems: "center"
+      }}
+    >
+      
+      <Form
+        onSubmit={handleSubmit}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "2fr",
+          justifyContent: "center",
+          alignItems: "center",
+          gridGap: 15,
+          padding: "20px",
+          margin:"10px",
+          border: "1px solid black",
+          backgroundColor:"white"
+        }}
+      >
+        <FormGroup
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "10px",
+          }}
+        >
+          <h1 className="text-center">LOG IN</h1>
+          <FiUser size={60} style={{ border: "2px solid teal" }} />
+        </FormGroup>
+        <Form.Control
+          placeholder="enter email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Form.Control
+          placeholder="enter password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button type="submit">LOGIN</Button>
+       <p>Have no account? <Link to="/register">Register new account</Link></p>
+      </Form>
+    </div>
+  );
+};
+
+export default LoginScreen;
