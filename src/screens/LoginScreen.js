@@ -4,19 +4,19 @@ import { UserContext } from "../contexts/UsersContext";
 import { FiUser } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
-const LoginScreen = ({ history, location }) => {
-  const { loginUser, userInfo } = useContext(UserContext);
+const LoginScreen = ({ history,location }) => {
+  const { loginUser,user} = useContext(UserContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
-
+  
   useEffect(() => {
-    if (userInfo) {
+    if (Object.keys(user).length>0 ) {
       history.push(redirect);
     }
-  }, [history, userInfo, redirect]);
+  }, [history, user, redirect]);
 
   function handleSubmit(e) {
     e.preventDefault();

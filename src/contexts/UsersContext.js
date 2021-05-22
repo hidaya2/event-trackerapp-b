@@ -25,15 +25,10 @@ const UserContextProvider = ({ children }) => {
       userInfo,
       config
     );
-    localStorage.setItem("userInfo", JSON.stringify(res.data));
-
-    const userLogin = (await localStorage.getItem("userInfo"))
-      ? JSON.parse(localStorage.getItem("userInfo"))
-      : {};
 
     dispatch({
       type: "LOGIN_USER",
-      payload: userLogin,
+      payload: res.data,
     });
     console.log(res.data);
   }

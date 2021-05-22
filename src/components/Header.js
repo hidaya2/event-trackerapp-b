@@ -6,7 +6,7 @@ import {
   Navbar,
   NavDropdown,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link,Redirect } from "react-router-dom";
 import { UserContext } from "../contexts/UsersContext";
 import { useContext } from "react";
 import { FiPower, FiUser } from "react-icons/all";
@@ -16,6 +16,7 @@ function Header() {
 
   const handleLogout = () => {
     logout();
+    <Redirect to="/login"/>
   };
 
   return (
@@ -23,14 +24,15 @@ function Header() {
       <Container>
         <NavbarBrand>EVENT TRACKER</NavbarBrand>
         <Nav>
-          <Nav.Link>
+         
+
+          {user.token ? (
+            <>
+             <Nav.Link>
             <Link to="/events" className="nav-link">
               EVENTS
             </Link>
           </Nav.Link>
-
-          {user.token ? (
-            <>
               <Nav.Link>
                 <Link to="/addevent" className="nav-link">
                   ADD
@@ -52,7 +54,7 @@ function Header() {
                 <NavDropdown.Item>{user.email}</NavDropdown.Item>
                 <NavDropdown.Item>
                   <Link
-                    to="/"
+                    to="/login"
                     className="nav-link"
                     onClick={handleLogout}
                   >

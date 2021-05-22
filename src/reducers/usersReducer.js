@@ -3,8 +3,8 @@ const userReducer = (state, action) => {
     case "LOGIN_USER":
       return {
         ...state,
-        userInfo: action.payload,
         isPending: false,
+        user: action.payload,
       };
     case "REGISTER_USER":
       return {
@@ -16,7 +16,7 @@ const userReducer = (state, action) => {
       return {
         ...state,
         isPending: false,
-        user: "",
+        user: {},
       };
     default:
       return state;
